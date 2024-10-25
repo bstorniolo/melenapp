@@ -40,5 +40,5 @@ jobs:
           app_location: "/melenapp-ui" # App source code path
           api_location: "/MelenappApi" # Api source code path - optional
           # output_location: "build" # Built app content directory - optional
-          output_location: "melenapp-ui/build"
+          # output_location: "melenapp-ui/build"
           ###### End of Repository/Build Configurations ######
