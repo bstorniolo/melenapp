@@ -42,7 +42,7 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           # app_location: "/melenapp-ui" # App source code path
           app_location: "melenapp-ui"  # Path to the React app code (relative to the repo root)
-          output_location: "melenapp-ui/build"  # Path to the build output folder
+          output_location: "melenapp-ui/dist"  # Path to the build output folder
           api_location: "/MelenappApi" # Api source code path - optional
           # output_location: "build" # Built app content directory - optional
           # output_location: "melenapp-ui/build"
