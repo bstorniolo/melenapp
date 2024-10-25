@@ -1,0 +1,76 @@
+
+melenapp-rg
+
+
+
+
+Cosmos DB Emulator Container
+
+1) docker run -p 8081:8081 -p 10251:10251 -p 10252:10252 -p 10253:10253 -p 10254:10254 \
+  -m 3g --name=cosmos-emulator \
+  -e AZURE_COSMOS_EMULATOR_PARTITION_COUNT=10 \
+  -e AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE=true \
+  mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator
+
+
+extract certificate
+docker cp cosmos-emulator:/tmp/cosmos/appdata/Packages/DataExplorer/emulator.pem ./emulatorcert.pem
+
+
+Step 4.2: Start Azurite
+- azurite --blobHost 127.0.0.1 --blobPort 10000
+
+
+
+
+FRONT-END
+
+1) npm start
+http://localhost:3000.
+
+
+
+
+
+
+
+
+RealSkill
+
+
+Micah Lancaster’s RealSkill app consists of more than 15 training checklist programs for anyone who wants to enhance their basketball skills to an elite level
+This world-renowned Checklist Training System utilizes the exact system that Micah Lancaster and I’m Possible Training has used and proven successful for young players to NBA All-Stars. RealSkill includes New Skills, updated regularly, the Drillmat System, All-Around RealSkill, RealFootwork, RealShooter, Real Finishing, RealMovement, RealHandles, I’m Possible Kids, RealLive Workouts, and more programs using training tools found inside Shop Essentials.
+NEW TRAINING ASSIGNMENTS EVERY MONTH
+Come back weekly to find new training items added for you to experience within the New Skills section of the app.
+NO PARTNER? NO PROBLEM.
+With the training checklist system, Micah literally is your training partner and coach. He's designed every single assignment in his checklist to give you truly world-class training, all on your own. The I’m Possible mission has always been to equip players around the world to train by themselves at a world-class level!
+YOUR TRAINING, YOUR SCHEDULE
+Only have 10-20 minutes to train? Just complete one checklist item. Have more time available? Simply check as many training items off your list as you can, all on your schedule. Micah Lancaster’s RealSkill checklist approach takes all the guesswork and pressure off, allowing you to simply focus on your training progress.
+ELITE TRAINING, CUSTOMIZED TO YOUR SKILL LEVEL
+Every year, Micah successfully trains every skill level, from the youngest players to best of the best in the NBA.
+No matter your age, skill level, or what your current game looks like, the RealSkill approach is fully customized to meet all of your personal training needs, delivering game-ready results today.
+
+HIGHLY DETAILED VIDEO & AUDIO TUTORIALS
+Throughout every tutorial in each training checklist, Micah teaches you each of his methods with the incredible detail he's known for around the world. You'll understand exactly how to perform and improve each training method, and why each item on the checklist is going to change your game!
+
+TRACK YOUR PROGRESS, TAKE NOTES, SET REMINDERS
+From Micah's most basic training methods to his most advanced, all are essential. Each checklist items allows you to track your training progress, take detailed notes, and set personal reminders using tabs like "Favorites", "Needs Work", and more. Micah has made it easier than ever to come back and master every game-changing skill as often as you want, putting the checklist process completely in your control.
+Terms of use -> https://hq.possibletraining.com/terms-conditions2/
+Privacy policy -> https://hq.possibletraining.com/privacy2/
+What’s New
+Version History
+Jul 31, 2024 Version 1.63
+We continuously improve the app to give our users the best experience. In this update:
+
+- Bug fixes
+
+Ratings and Reviews
+See All
+4.4 out of 5
+23 Ratings
+ 
+Texas boy 234261
+, 
+09/23/2021
+Phenomenal App
+The I’m Possible Cloud is hands down the

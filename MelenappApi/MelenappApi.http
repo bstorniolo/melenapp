@@ -1,0 +1,6 @@
+@MelenappApi_HostAddress = http://localhost:5219
+
+GET {{MelenappApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
