@@ -74,3 +74,18 @@ Texas boy 234261
 09/23/2021
 Phenomenal App
 The I’m Possible Cloud is hands down the
+
+
+
+
+
+
+Deploy form local machine
+
+
+
+1) dotnet publish -c Release
+
+az webapp deploy --resource-group melenapp-rg --name api-melenapp --src-path ./MelenappApi/bin/Release/net8.0/publish
+
+Melenapp/melenapp/MelenappApi/bin/Release/net8.0/publish/
