@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace MelenappApi.Models
 {
-    public class Exercise
+    public class Skill
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -10,7 +10,7 @@ namespace MelenappApi.Models
         [JsonProperty("title")]
         public string Title { get; set; }
 
-        [JsonProperty("category")]
+        [JsonProperty("classification")]
         public string Category { get; set; }
 
         [JsonProperty("tags")]

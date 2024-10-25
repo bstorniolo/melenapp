@@ -20,7 +20,7 @@ namespace MelenappApi.Controllers
         public ExercisesController(CosmosClient cosmosClient, IConfiguration configuration)
         {
             string databaseName = configuration["CosmosDb:DatabaseName"];
-            string containerName = "Exercises";
+            string containerName = "Skills";
             _exercisesContainer = cosmosClient.GetContainer(databaseName, containerName);
         }
 
@@ -28,8 +28,8 @@ namespace MelenappApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetExercises()
         {
-            List<Exercise> exercises = new List<Exercise>();
-            exercises.Add(new Exercise{
+            List<Skill> exercises = new List<Skill>();
+            exercises.Add(new Skill{
                 Id = "pija",
                 Title="Mock Exercise",
                 Category="wfe",
@@ -40,7 +40,7 @@ namespace MelenappApi.Controllers
             });
             try
             {
-                var query = _exercisesContainer.GetItemLinqQueryable<Exercise>()
+                var query = _exercisesContainer.GetItemLinqQueryable<Skill>()
                     //.Where(e => e.IsActive)
                     .ToFeedIterator();
 
@@ -67,7 +67,7 @@ namespace MelenappApi.Controllers
         {
             try
             {
-                ItemResponse<Exercise> response = await _exercisesContainer.ReadItemAsync<Exercise>(id, new PartitionKey(id));
+                ItemResponse<Skill> response = await _exercisesContainer.ReadItemAsync<Skill>(id, new PartitionKey(id));
 
                 // ItemResponse<Exercise> response = await _exercisesContainer.ReadItemAsync<Exercise>(id, new PartitionKey("id"));
 
@@ -94,11 +94,11 @@ namespace MelenappApi.Controllers
             try
             {
                 // Example: Query the exercises where the category matches the given path
-                var query = _exercisesContainer.GetItemLinqQueryable<Exercise>()
+                var query = _exercisesContainer.GetItemLinqQueryable<Skill>()
                             .Where(e => e.Category.StartsWith(categoryPath))
                             .ToFeedIterator();
 
-                List<Exercise> exercises = new List<Exercise>();
+                List<Skill> exercises = new List<Skill>();
                 while (query.HasMoreResults)
                 {
                     var response = await query.ReadNextAsync();
@@ -115,7 +115,7 @@ namespace MelenappApi.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateExercise([FromBody] Exercise exercise)
+        public async Task<IActionResult> CreateExercise([FromBody] Skill exercise)
         {
             if (exercise == null)
             {
@@ -125,7 +125,7 @@ namespace MelenappApi.Controllers
             try
             {
                 exercise.Id = Guid.NewGuid().ToString("N").Substring(0, 8);
-                ItemResponse<Exercise> response = await _exercisesContainer.CreateItemAsync(exercise);
+                ItemResponse<Skill> response = await _exercisesContainer.CreateItemAsync(exercise);
                 return Ok(response.Resource); // Return the created exercise
             }
             catch (CosmosException ex)
@@ -135,7 +135,7 @@ namespace MelenappApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateExercise(string id, [FromBody] Exercise updatedExercise)
+        public async Task<IActionResult> UpdateExercise(string id, [FromBody] Skill updatedExercise)
         {
             if (updatedExercise == null || string.IsNullOrEmpty(id))
             {
@@ -148,7 +148,7 @@ namespace MelenappApi.Controllers
                 var partitionKey = new PartitionKey(id);
 
                 // Fetch the current exercise by ID and partition key
-                ItemResponse<Exercise> exerciseResponse = await _exercisesContainer.ReadItemAsync<Exercise>(id, partitionKey);
+                ItemResponse<Skill> exerciseResponse = await _exercisesContainer.ReadItemAsync<Skill>(id, partitionKey);
 
                 var existingExercise = exerciseResponse.Resource;
 
@@ -179,8 +179,8 @@ namespace MelenappApi.Controllers
          [HttpGet("mock")]
         public async Task<IActionResult> GetExercisesMock()
         {
-            List<Exercise> exercises = new List<Exercise>{
-                new Exercise{
+            List<Skill> exercises = new List<Skill>{
+                new Skill{
                     Id = "pija",
                     Title="Mock Exercise",
                     Category="wfe",

@@ -10,6 +10,7 @@ melenapp-pwa/build/
 # Ignore .NET Core obj and bin directories
 MelenappApi/bin/
 MelenappApi/obj/
+MelenappApi/publish/
 
 # NuGet-specific files
 *.nuget.g.props

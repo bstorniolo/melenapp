@@ -11,10 +11,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
- string EndpointUri = "https://localhost:8081/";
-string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw=="; // Use the emulator key
-
-
 
 
 // Configure authentication
@@ -55,7 +51,7 @@ builder.Services.AddSingleton<CosmosClient>(serviceProvider =>
         // ConnectionMode = ConnectionMode.Gateway // Use Gateway mode for better compatibility
     };
     
-    return new CosmosClient(EndpointUri, PrimaryKey, cosmosClientOptions);
+    return new CosmosClient(account, key, cosmosClientOptions);
 });
 
 // Add CORS policy
@@ -63,7 +59,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("http://localhost:3000")
+        builder.WithOrigins("http://localhost:5173")
                .AllowAnyHeader()
                .AllowAnyMethod();
     });
@@ -72,11 +68,11 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 
 // Configure the HTTP request pipeline.
 
