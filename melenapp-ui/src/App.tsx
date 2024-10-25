@@ -7,7 +7,7 @@ import ExerciseEditor from './components/ExerciseEditor';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 import ListPage from './pages/ListPage';
-import LoginPage from './pages/LoginPage';
+// import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ExercisePage from './pages/ExercisePage';
 import CategoryExerciseList from './pages/CategoryExerciseList';
@@ -50,7 +50,7 @@ const App: React.FC = () => {
         <Route path="/exercise/:id" element={<ExercisePage />} />
         <Route path="/editor/:id" element={<ExerciseEditor />} />
         <Route path="/editor" element={<ExerciseEditor />} /> 
-        <Route path="/login" element={<LoginPage />} />
+        {/* <Route path="/login" element={<LoginPage />} /> */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

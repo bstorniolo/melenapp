@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container, Typography, Grid, Card, CardContent, CardMedia, IconButton, Tooltip, Button, Chip } from '@mui/material';
+import { Container, Typography, Grid, Card, CardContent, CardMedia, IconButton, Tooltip, Chip } from '@mui/material';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
