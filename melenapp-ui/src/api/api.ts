@@ -4,7 +4,7 @@ import axios from 'axios';
 // import { loginRequest } from '../config/authConfig';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/', // Replace with your API base URL
+  baseURL: 'https://api-melenapp-aufjdye3b6abb4gs.canadacentral-01.azurewebsites.net/', // Replace with your API base URL
 });
 
 // api.interceptors.request.use(

@@ -59,7 +59,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("http://localhost:5173")
+        builder.WithOrigins("https://white-stone-007bfb710.5.azurestaticapps.net")
                .AllowAnyHeader()
                .AllowAnyMethod();
     });
