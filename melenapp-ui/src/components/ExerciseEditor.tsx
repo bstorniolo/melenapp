@@ -62,6 +62,7 @@ const ExerciseEditor: React.FC = () => {
     console.log("ID: ", id);
     console.log("exercise: ", exercise);
     if (id) {
+      console.log("Editing Skill... ");
       // Edit existing exercise (PUT request)
       axios.put(`/exercises/${id}`, exercise)
         .then(() => {
@@ -73,7 +74,9 @@ const ExerciseEditor: React.FC = () => {
           console.error('Error updating exercise:', error);
         });
     } else {
+      console.log("Creating Skill... ");
       // Add new exercise (POST request)
+      exercise.id = "0";
       axios.post('/exercises', exercise)
         .then(() => {
           console.log('New exercise added');
