@@ -7,8 +7,6 @@ const api = axios.create({
   baseURL: 'https://melenapp-api-eheeg2gjf0cnbwb6.brazilsouth-01.azurewebsites.net/', // Replace with your API base URL
 });
 
-//melenapp-api-eheeg2gjf0cnbwb6.brazilsouth-01.azurewebsites.net
-
 // api.interceptors.request.use(
 //   async (config) => {
 //     const accounts = msalInstance.getAllAccounts();
