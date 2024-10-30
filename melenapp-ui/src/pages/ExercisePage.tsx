@@ -1,4 +1,3 @@
-// src/components/ExercisePage.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/api';
@@ -14,16 +13,7 @@ interface Exercise {
   tags: string;
   videoUrl: string;
 }
-function convertYoutubeUrl(youtubeUrl:string) {
-    const regex = /youtu\.be\/([a-zA-Z0-9_-]+)/;
-    const match = youtubeUrl.match(regex);
-  
-    if (match && match[1]) {
-      const videoId = match[1];
-      const params = youtubeUrl.split('?')[1]; // Get the query parameters (if any)
-      return `https://www.youtube.com/embed/${videoId}${params ? '?' + params : ''}`;
-    }
-}
+import { convertYoutubeUrl } from '../utils';
 
 const ExercisePage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Get the id from the URL

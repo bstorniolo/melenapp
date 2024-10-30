@@ -86,15 +86,71 @@ Deploy form local machine
 
 1) dotnet publish -c Release
 
-az webapp deploy --resource-group melenapp-rg --name api-melenapp --src-path ./MelenappApi/bin/Release/net8.0/publish
+az webapp deploy --resource-group melenapp-rg --name api-melenapp --src-path ./MelenappApi/bin/Release/net8.0/publish/
 az webapp deploy --resource-group melenapp-rg --name api-melenapp --src-path ./publish
 
 Melenapp/melenapp/MelenappApi/bin/Release/net8.0/publish/
 
 
 
-
+dotnet publish -c Release -o ./publish
 az webapp deployment source config-zip --resource-group melenapp-rg --name api-melenapp --src ./publish/publish.zip
-
+az webapp deployment source config-zip --resource-group melenapp-api_group --name melenapp-api --src ./publish/publish.zip
 
 az webapp log tail --resource-group melenapp-rg  --name api-melenapp
+
+
+
+
+
+
+
+
+
+name: Azure Static Web Apps CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          lfs: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'latest' # Specify Node.js version 20
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: melenapp-ui 
+
+      - name: Build the app
+        run: npm run build
+        working-directory: melenapp-ui  
+        
+      - name: Build And Deploy
+        id: deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_STONE_007BFB710 }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          # app_location: "/melenapp-ui" # App source code path
+          app_location: "melenapp-ui"  # Path to the React app code (relative to the repo root)
+          output_location: "dist"  # Path to the build output folder
+          # api_location: "/MelenappApi" # Api source code path - optional
+          ###### End of Repository/Build Configurations ######
