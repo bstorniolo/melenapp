@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { Container, TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Container, TextField, Button, Select, MenuItem, InputLabel, FormControl, CircularProgress } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from '../api/api';
@@ -40,17 +40,20 @@ const ExerciseEditor: React.FC = () => {
           setVideoUrl(exercise.videoUrl);
           setLevel(exercise.level);
           setCategory(exercise.category);
-          setTags(exercise.tags);
-          setIsLoading(false);
+          setTags(exercise.tags);          
         })
         .catch(error => {
-          console.error('Error fetching exercise:', error);
+          console.error('Error fetching exercise:', error);      
+        }).finally(() => {
+
           setIsLoading(false);
+
         });
     }
   }, [id]);
 
   const handleSubmit = () => {
+    setIsLoading(true); 
     const exercise = {
       id,
       title,
@@ -72,25 +75,30 @@ const ExerciseEditor: React.FC = () => {
         })
         .catch(error => {
           console.error('Error updating exercise:', error);
+        }).finally(() => {
+
+          setIsLoading(false); // End loading
+
         });
     } else {
 
       // Add new exercise (POST request)
       exercise.id = "0";
       axios.post('/exercises', exercise)
-        .then(() => {
-
-          navigate('/exercises'); // Navigate to the exercises list
+        .then(response => {
+          navigate(`/exercise/${response.data.id}`); // Navigate to the new exercise page
         })
         .catch(error => {
           console.error('Error adding exercise:', error);
+        }).finally(() => {
+          setIsLoading(false); // End loading
         });
     }
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading && !id) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <Container maxWidth="md" style={{ marginTop: '50px' }}>
@@ -144,8 +152,10 @@ const ExerciseEditor: React.FC = () => {
           color="primary"
           onClick={handleSubmit}
           style={{ marginTop: '20px' }}
+          disabled={isLoading} // Disable button while loading
         >
-          {id ? 'Update Exercise' : 'Add Exercise'}
+          {/* {id ? 'Update Exercise' : 'Add Exercise'} */}
+          {isLoading ? <CircularProgress size={24} color="inherit" /> : id ? 'Update Exercise' : 'Add Exercise'}
         </Button>
       </form>
     </Container>

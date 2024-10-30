@@ -29,15 +29,7 @@ namespace MelenappApi.Controllers
         public async Task<IActionResult> GetExercises()
         {
             List<Skill> exercises = new List<Skill>();
-            exercises.Add(new Skill{
-                Id = "pija",
-                Title="Mock Exercise",
-                Category="wfe",
-                Level="wef",
-                VideoUrl="wef",
-                Description="wef",
-                IsActive=true
-            });
+
             try
             {
                 var query = _exercisesContainer.GetItemLinqQueryable<Skill>()
@@ -175,8 +167,7 @@ namespace MelenappApi.Controllers
             }
         }
 
-
-         [HttpGet("mock")]
+        [HttpGet("mock")]
         public async Task<IActionResult> GetExercisesMock()
         {
             List<Skill> exercises = new List<Skill>{
@@ -190,12 +181,9 @@ namespace MelenappApi.Controllers
                     IsActive=true
                 }
             };
-             
 
             return Ok(exercises);
         }
-
-
 
     // Other actions (POST, PUT, DELETE)
     }  
