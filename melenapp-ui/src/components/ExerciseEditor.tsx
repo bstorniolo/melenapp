@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Container, TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -17,13 +17,15 @@ interface Exercise {
 
 const ExerciseEditor: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Get the exercise ID from the URL params
+  const location = useLocation(); // To get state from navigation
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
   const [level, setLevel] = useState('');
-  const [category, setCategory] = useState('');
+  // const [category, setCategory] = useState('');
+  const [category, setCategory] = useState<string>((location.state as any)?.category || ''); // Initialize with category from state if available
   const [tags, setTags] = useState('');
 
   useEffect(() => {
@@ -59,14 +61,12 @@ const ExerciseEditor: React.FC = () => {
       tags: tags.trim(),
     };
 
-    console.log("ID: ", id);
-    console.log("exercise: ", exercise);
     if (id) {
-      console.log("Editing Skill... ");
+
       // Edit existing exercise (PUT request)
       axios.put(`/exercises/${id}`, exercise)
         .then(() => {
-          console.log('Exercise updated');
+
           navigate(`/exercise/${id}`); // Navigate back to the exercise page
           
         })
@@ -74,12 +74,12 @@ const ExerciseEditor: React.FC = () => {
           console.error('Error updating exercise:', error);
         });
     } else {
-      console.log("Creating Skill... ");
+
       // Add new exercise (POST request)
       exercise.id = "0";
       axios.post('/exercises', exercise)
         .then(() => {
-          console.log('New exercise added');
+
           navigate('/exercises'); // Navigate to the exercises list
         })
         .catch(error => {
