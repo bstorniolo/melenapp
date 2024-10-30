@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/api';
 import useSWR from 'swr';
 

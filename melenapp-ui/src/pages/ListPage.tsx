@@ -13,7 +13,7 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 const ListPage: React.FC = () => {
   const url = '/exercises'; // The URL key used in SWR
-  const { data: exercises = [], error, mutate } = useSWR<Exercise[]>(url, fetcher);
+  const { data: exercises = [], error } = useSWR<Exercise[]>(url, fetcher);
   if (error) return <div>Error loading exercises.</div>;
 
   return (

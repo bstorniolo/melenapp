@@ -36,15 +36,18 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
 
   // TODO: Handlers for icons
   const handleFavoriteToggle = (id: string) => {
-    mutate(url, exercises => exercises.map(exercise => exercise.id === id ? { ...exercise, isFavorite: !exercise.isFavorite } : exercise), false);
+    console.log("handleFavoriteToggle: ", id);
+    // mutate(url, exercises => exercises.map(exercise => exercise.id === id ? { ...exercise, isFavorite: !exercise.isFavorite } : exercise), false);
   };
 
   const handleMarkAsCompleted = (id: string) => {
-    mutate(url, exercises => exercises.map(exercise => exercise.id === id ? { ...exercise, isCompleted: !exercise.isCompleted } : exercise), false);
+    console.log("handleMarkAsCompleted: ", id);
+    // mutate(url, exercises => exercises.map(exercise => exercise.id === id ? { ...exercise, isCompleted: !exercise.isCompleted } : exercise), false);
   };
 
   const handleAddToTodo = (id: string) => {
-    mutate(url, exercises => exercises.map(exercise => exercise.id === id ? { ...exercise, isTodo: !exercise.isTodo } : exercise), false);
+    console.log("handleAddToTodo: ", id);
+    // mutate(url, exercises => exercises.map(exercise => exercise.id === id ? { ...exercise, isTodo: !exercise.isTodo } : exercise), false);
   };
 
 
