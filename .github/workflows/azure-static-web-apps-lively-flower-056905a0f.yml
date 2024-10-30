@@ -3,11 +3,11 @@ name: Melenapp CI/CD - Brazil
 on:
   push:
     branches:
-      - main-br
+      - main
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main-br
+      - main
 
 jobs:
   build_and_deploy_job:
