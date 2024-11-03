@@ -31,7 +31,7 @@ interface ExerciseCardProps {
 }
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
-  const { user, mutateUser } = useUser();
+  const { user } = useUser();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isTodo, setIsTodo] = useState(false);
@@ -107,21 +107,21 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
           {isAuthenticated && (
           <div style={{ display: 'flex', justifyContent: 'space-around' }}>
          
-            <Tooltip title={exercise.isFavorite ? 'Unfavorite' : 'Favorite'}>
+            <Tooltip title={'Agregar a Favoritos'}>
               <IconButton onClick={handleFavoriteToggle}>
                 {isFavorite? <FavoriteIcon color="error" /> : <FavoriteBorderIcon style={{ color: 'gray' }} />}
               </IconButton>
             </Tooltip>
 
           
-            <Tooltip title={exercise.isCompleted ? 'Mark as Incomplete' : 'Mark as Completed'}>
+            <Tooltip title={'Marcar Completado' }>
               <IconButton onClick={handleMarkAsCompleted}>
                 {isCompleted ? <CheckCircleIcon color="success" /> : <RadioButtonUncheckedIcon style={{ color: 'gray' }} />}
               </IconButton>
             </Tooltip>
 
 
-            <Tooltip title={exercise.isTodo ? 'Remove from To-Do' : 'Add to To-Do'}>
+            <Tooltip title={'Marcar como pendiente'}>
               <IconButton onClick={handleAddToTodo}>
                 {isTodo ? <PlaylistAddCheckIcon color="primary" /> : <PlaylistAddIcon style={{ color: 'gray' }} />}
               </IconButton>
