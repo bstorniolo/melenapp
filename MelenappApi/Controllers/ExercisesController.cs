@@ -15,24 +15,24 @@ namespace MelenappApi.Controllers
     public class ExercisesController : ControllerBase
     {
 
-        private readonly Container _exercisesContainer;
+        private readonly Container _container;
 
         public ExercisesController(CosmosClient cosmosClient, IConfiguration configuration)
         {
             string databaseName = configuration["CosmosDb:DatabaseName"];
             string containerName = "Skills";
-            _exercisesContainer = cosmosClient.GetContainer(databaseName, containerName);
+            _container = cosmosClient.GetContainer(databaseName, containerName);
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> GetExercises()
+        public async Task<IActionResult> GetSkills()
         {
-            List<Skill> exercises = new List<Skill>();
+            List<Skill> skills = new List<Skill>();
 
             try
             {
-                var query = _exercisesContainer.GetItemLinqQueryable<Skill>()
+                var query = _container.GetItemLinqQueryable<Skill>()
                     //.Where(e => e.IsActive)
                     .ToFeedIterator();
 
@@ -40,7 +40,7 @@ namespace MelenappApi.Controllers
                 while (query.HasMoreResults)
                 {
                     var response = await query.ReadNextAsync();
-                    exercises.AddRange(response);
+                    skills.AddRange(response);
                 }
             }
             catch (System.Exception e)
@@ -50,29 +50,27 @@ namespace MelenappApi.Controllers
             }
     
 
-            return Ok(exercises);
+            return Ok(skills);
         }
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetExercise(string id)
+        public async Task<IActionResult> GetSkill(string id)
         {
             try
             {
-                ItemResponse<Skill> response = await _exercisesContainer.ReadItemAsync<Skill>(id, new PartitionKey(id));
-
-                // ItemResponse<Exercise> response = await _exercisesContainer.ReadItemAsync<Exercise>(id, new PartitionKey("id"));
+                ItemResponse<Skill> response = await _container.ReadItemAsync<Skill>(id, new PartitionKey(id));
 
                 if (response != null)
                 {
                     return Ok(response.Resource);
                 }
                 
-                return NotFound($"Exercise with id {id} not found.");
+                return NotFound($"Skill with id {id} not found.");
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
             {
-                return NotFound($"Exercise with id {id} not found.");
+                return NotFound($"Skill with id {id} not found.");
             }
             catch (Exception e)
             {
@@ -81,23 +79,23 @@ namespace MelenappApi.Controllers
         }
 
         [HttpGet("category/{*categoryPath}")]
-        public async Task<IActionResult> GetExercisesByCategory(string categoryPath)
+        public async Task<IActionResult> GetSkillsyCategory(string categoryPath)
         {
             try
             {
-                // Example: Query the exercises where the category matches the given path
-                var query = _exercisesContainer.GetItemLinqQueryable<Skill>()
+                // Example: Query the skills where the category matches the given path
+                var query = _container.GetItemLinqQueryable<Skill>()
                             .Where(e => e.Category.StartsWith(categoryPath))
                             .ToFeedIterator();
 
-                List<Skill> exercises = new List<Skill>();
+                List<Skill> skills = new List<Skill>();
                 while (query.HasMoreResults)
                 {
                     var response = await query.ReadNextAsync();
-                    exercises.AddRange(response);
+                    skills.AddRange(response);
                 }
 
-                return Ok(exercises);
+                return Ok(skills);
             }
             catch (Exception ex)
             {
@@ -107,18 +105,18 @@ namespace MelenappApi.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateExercise([FromBody] Skill exercise)
+        public async Task<IActionResult> CreateSkill([FromBody] Skill skill)
         {
-            if (exercise == null)
+            if (skill == null)
             {
-                return BadRequest("Exercise data is missing.");
+                return BadRequest("Skill data is missing.");
             }
 
             try
             {
-                exercise.Id = Guid.NewGuid().ToString("N").Substring(0, 8);
-                ItemResponse<Skill> response = await _exercisesContainer.CreateItemAsync(exercise);
-                return Ok(response.Resource); // Return the created exercise
+                skill.Id = Guid.NewGuid().ToString("N").Substring(0, 8);
+                ItemResponse<Skill> response = await _container.CreateItemAsync(skill);
+                return Ok(response.Resource); // Return the created skill
             }
             catch (CosmosException ex)
             {
@@ -127,11 +125,11 @@ namespace MelenappApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateExercise(string id, [FromBody] Skill updatedExercise)
+        public async Task<IActionResult> UpdateSkill(string id, [FromBody] Skill updatedSkill)
         {
-            if (updatedExercise == null || string.IsNullOrEmpty(id))
+            if (updatedSkill == null || string.IsNullOrEmpty(id))
             {
-                return BadRequest("Invalid exercise data or missing ID.");
+                return BadRequest("Invalid skill data or missing ID.");
             }
 
             try
@@ -139,27 +137,27 @@ namespace MelenappApi.Controllers
                 // Set the partition key (assuming 'Category' is the partition key)
                 var partitionKey = new PartitionKey(id);
 
-                // Fetch the current exercise by ID and partition key
-                ItemResponse<Skill> exerciseResponse = await _exercisesContainer.ReadItemAsync<Skill>(id, partitionKey);
+                // Fetch the current skill by ID and partition key
+                ItemResponse<Skill> skillResponse = await _container.ReadItemAsync<Skill>(id, partitionKey);
 
-                var existingExercise = exerciseResponse.Resource;
+                var existingSkill = skillResponse.Resource;
 
-                // Update the fields of the existing exercise
-                existingExercise.Title = updatedExercise.Title;
-                existingExercise.Description = updatedExercise.Description;
-                existingExercise.VideoUrl = updatedExercise.VideoUrl;
-                existingExercise.Level = updatedExercise.Level;
-                existingExercise.Category = updatedExercise.Category;
-                existingExercise.Tags = updatedExercise.Tags;
+                // Update the fields of the existing skill
+                existingSkill.Title = updatedSkill.Title;
+                existingSkill.Description = updatedSkill.Description;
+                existingSkill.VideoUrl = updatedSkill.VideoUrl;
+                existingSkill.Level = updatedSkill.Level;
+                existingSkill.Category = updatedSkill.Category;
+                existingSkill.Tags = updatedSkill.Tags;
                 
                 // Replace the existing item with the updated version
-                var response = await _exercisesContainer.ReplaceItemAsync(existingExercise, id, partitionKey);
+                var response = await _container.ReplaceItemAsync(existingSkill, id, partitionKey);
 
-                return Ok(response.Resource); // Return the updated exercise
+                return Ok(response.Resource); // Return the updated skill
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                return NotFound($"Exercise with ID {id} not found.");
+                return NotFound($"Skill with ID {id} not found.");
             }
             catch (Exception ex)
             {
@@ -168,12 +166,12 @@ namespace MelenappApi.Controllers
         }
 
         [HttpGet("mock")]
-        public async Task<IActionResult> GetExercisesMock()
+        public async Task<IActionResult> GetSkillsMock()
         {
-            List<Skill> exercises = new List<Skill>{
+            List<Skill> skills = new List<Skill>{
                 new Skill{
                     Id = "pija",
-                    Title="Mock Exercise",
+                    Title="Mock Skill",
                     Category="wfe",
                     Level="wef",
                     VideoUrl="wef",
@@ -182,7 +180,7 @@ namespace MelenappApi.Controllers
                 }
             };
 
-            return Ok(exercises);
+            return Ok(skills);
         }
 
     // Other actions (POST, PUT, DELETE)

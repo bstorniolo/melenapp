@@ -25,7 +25,7 @@ const CategoryExerciseList: React.FC = () => {
 
   const { exactExercises, uniqueCategories } = useMemo(() => {
     const exactExercises = exercises.filter(exe => exe.category === categoryPath);
-    
+    // console.log("exactExercises: ", exactExercises);
     const categories = exercises
       .filter(exe => exe.category.startsWith(categoryPath || '') && exe.category !== categoryPath)
       .map(exe => {
@@ -89,8 +89,8 @@ const CategoryExerciseList: React.FC = () => {
 
       <Grid container spacing={4}>
        
-      {exactExercises.map((exercise) => (
-        <SkillCard key={exercise.id} exercise={exercise} />
+      {exactExercises.map((skill) => (
+        <SkillCard key={skill.id} exercise={skill} />
       ))}
 
       </Grid>
