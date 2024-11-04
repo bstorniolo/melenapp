@@ -11,9 +11,14 @@ const NavigationBar: React.FC = () => {
 
   const isAuthenticated = useIsAuthenticated();
   const { t } = useTranslation();
+  
+  const loginRequest = {
+    scopes: ['openid'],
+    extraQueryParameters: { ui_locales: 'es' },
+  };
 
   const handleLogin = () => {
-    instance.loginRedirect();
+    instance.loginRedirect(loginRequest);
   };
 
   const handleLogout = () => {

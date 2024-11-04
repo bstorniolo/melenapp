@@ -55,8 +55,10 @@ namespace MelenappApi.Controllers
         {
             try
             {
-                ItemResponse<User> response = await _container.ReadItemAsync<User>(userId, new PartitionKey(userId));
-                return Ok(response.Resource);
+                var user = await GetUserByIdAsync(userId);
+
+                // ItemResponse<User> response = await _container.ReadItemAsync<User>(userId, new PartitionKey(userId));
+                return Ok(user);
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
