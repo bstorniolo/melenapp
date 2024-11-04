@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/api';
 import { Button } from '@mui/material';
 import TagChips from '../components/TagChips';
+import SkillActions from '../components/SkillActions';
 
 interface Exercise {
   id: string;
@@ -63,13 +64,14 @@ const ExercisePage: React.FC = () => {
           />
         </div>
       )}
+      <SkillActions skillId={exercise.id} />
        <Button
         variant="contained"
         color="primary"
         onClick={handleEditClick}
         style={{ marginTop: '20px' }}
       >
-        Edit Exercise
+        Edit Skill
       </Button>
     </div>
   );

@@ -5,7 +5,7 @@ import useSWR from 'swr';
 
 
 import { Container, Typography, Grid, Button, Chip } from '@mui/material';
-
+import ButtonGroup from '@mui/material/ButtonGroup';
 import BackButton from '../components/BackButton';
 import SkillCard from '../components/SkillCard';
 import { Exercise } from '../types/Skill';
@@ -51,15 +51,16 @@ const CategoryExerciseList: React.FC = () => {
   return (
     <Container maxWidth="lg" style={{ marginTop: '50px' }}>
 
+    <ButtonGroup disableElevation size="large"  variant="contained" aria-label="Basic button group">
       <BackButton />
-
-      {/* <Link to={`/create-exercise/${categoryPath}`}> */}
-        <Button variant="contained" 
+      <Button variant="contained" 
                 color="primary"
                 onClick={handleCreateClick}>
           Create New Exercise in {categoryPath}
         </Button>
-      {/* </Link> */}
+    </ButtonGroup>
+
+    
 
       <Typography variant="h4" gutterBottom>
         Exercises and Categories
