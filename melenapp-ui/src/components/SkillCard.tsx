@@ -30,7 +30,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
     <Grid item xs={12} sm={6} md={4}>
       <Card>
       <CardHeader
-        title={exercise.title}
+        title={`${exercise.title.charAt(0).toUpperCase()}${exercise.title.slice(1).toLowerCase()}`}
         subheader={exercise.level}
         action={
           <IconButton aria-label="settings">

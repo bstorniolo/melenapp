@@ -60,7 +60,7 @@ const ExerciseEditor: React.FC = () => {
       description,
       videoUrl,
       level,
-      category,
+      category: category.replace(/\s*\/\s*/g, "/"),
       tags: tags.trim(),
     };
 

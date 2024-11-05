@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/api';
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import TagChips from '../components/TagChips';
 import SkillActions from '../components/SkillActions';
 
@@ -44,7 +44,7 @@ const ExercisePage: React.FC = () => {
   };
 
   return (
-    <div>
+    <Container maxWidth="sm">
       <h1>{exercise.title}</h1>
       <p><strong>Category:</strong> {exercise.category}</p>
       <p><strong>Level:</strong> {exercise.level}</p>
@@ -73,7 +73,7 @@ const ExercisePage: React.FC = () => {
       >
         Edit Skill
       </Button>
-    </div>
+    </Container>
   );
 };
 
