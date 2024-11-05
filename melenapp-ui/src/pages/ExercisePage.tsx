@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/api';
-import { Button, Container } from '@mui/material';
+import { 
+  Button, 
+  Container, 
+  Typography, 
+  Card, 
+  CardContent, 
+  CardMedia, 
+  Box, 
+  Divider, 
+  Grid 
+} from '@mui/material';
 import TagChips from '../components/TagChips';
 import SkillActions from '../components/SkillActions';
+import { convertYoutubeUrl } from '../utils';
 
 interface Exercise {
   id: string;
@@ -14,65 +25,91 @@ interface Exercise {
   tags: string;
   videoUrl: string;
 }
-import { convertYoutubeUrl } from '../utils';
 
 const ExercisePage: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // Get the id from the URL
+  const { id } = useParams<{ id: string }>();
   const [exercise, setExercise] = useState<Exercise | null>(null);
-  const navigate = useNavigate(); // Hook to navigate to other pages
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch the exercise details using the id
     axios.get(`/exercises/${id}`)
-      .then(response => {
-        setExercise(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching exercise:', error);
-      });
+      .then(response => setExercise(response.data))
+      .catch(error => console.error('Error fetching exercise:', error));
   }, [id]);
 
   if (!exercise) {
-    return <div>Loading...</div>;
+    return <Typography variant="h6" align="center">Loading...</Typography>;
   }
+
   const url = convertYoutubeUrl(exercise.videoUrl);
   const tagsArray = exercise.tags ? exercise.tags.split(',') : [];
 
-  const handleEditClick = () => {
-    // Navigate to the Edit Page for the exercise
-    navigate(`/editor/${exercise.id}`);
-  };
+  const handleEditClick = () => navigate(`/editor/${exercise.id}`);
 
   return (
-    <Container maxWidth="sm">
-      <h1>{exercise.title}</h1>
-      <p><strong>Category:</strong> {exercise.category}</p>
-      <p><strong>Level:</strong> {exercise.level}</p>
-      <p><strong>Description:</strong></p>
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Card raised>
+        <CardContent>
+          <Typography variant="h4" component="h1" gutterBottom>
+            {exercise.title}
+          </Typography>
 
-      <div dangerouslySetInnerHTML={{ __html: exercise.description }} />
-      {tagsArray.length > 0 && <TagChips tags={tagsArray} />}
-      {exercise.videoUrl && (
-        <div>
-          <h3>Video:</h3>
-          <iframe
-            width="560"
-            height="315"
-            src={url}
-            title={exercise.title}
-            allowFullScreen
-          />
-        </div>
-      )}
-      <SkillActions skillId={exercise.id} />
-       <Button
-        variant="contained"
-        color="primary"
-        onClick={handleEditClick}
-        style={{ marginTop: '20px' }}
-      >
-        Edit Skill
-      </Button>
+          <Grid container spacing={2} sx={{ mb: 3 }}>
+            <Grid item xs={6}>
+              <Typography variant="body2" color="textSecondary">
+                <strong>Category:</strong> {exercise.category}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="body2" color="textSecondary">
+                <strong>Level:</strong> {exercise.level}
+              </Typography>
+            </Grid>
+          </Grid>
+
+          <Divider sx={{ mb: 2 }} />
+
+          <Box mb={2}>
+            <Typography variant="body1" component="div" color="textSecondary">
+              <strong>Description:</strong>
+              <Box 
+                component="div" 
+                dangerouslySetInnerHTML={{ __html: exercise.description }} 
+                sx={{ mt: 1, p: 1, bgcolor: 'background.default', borderRadius: 1 }}
+              />
+            </Typography>
+          </Box>
+
+          {tagsArray.length > 0 && (
+            <Box sx={{ mb: 2 }}>
+              <TagChips tags={tagsArray} />
+            </Box>
+          )}
+
+          {exercise.videoUrl && (
+            <CardMedia
+              component="iframe"
+              src={url}
+              title={exercise.title}
+              sx={{ width: '100%', height: 315, border: 'none', mt: 2 }}
+            />
+          )}
+
+          <Divider sx={{ mt: 3, mb: 2 }} />
+
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <SkillActions skillId={exercise.id} />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleEditClick}
+              sx={{ mt: 2 }}
+            >
+              Edit Skill
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
     </Container>
   );
 };
