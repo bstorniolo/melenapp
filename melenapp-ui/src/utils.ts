@@ -21,4 +21,11 @@ export const convertYoutubeUrl = (youtubeUrl:string) => {
 
       return `https://www.youtube.com/embed/${videoId}${params ? '?' + params : ''}`;
     }
+
+    if (youtubeUrl.includes('/short/'))
+    {
+      return youtubeUrl.replace('/short/', '/embed/')
+    }
+    
+    return youtubeUrl;
 };
