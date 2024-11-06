@@ -11,7 +11,14 @@ export const convertYoutubeUrl = (youtubeUrl:string) => {
   
     if (match && match[1]) {
       const videoId = match[1];
-      const params = youtubeUrl.split('?')[1]; // Get the query parameters (if any)
+      const params = new URLSearchParams(youtubeUrl.split('?')[1]); 
+
+      if (params.has('t')) {
+        const timeInSeconds = params.get('t');
+        params.delete('t'); // Remove 't' parameter
+        params.set('start', timeInSeconds || ''); // Add 'start' parameter with the same value
+      }
+
       return `https://www.youtube.com/embed/${videoId}${params ? '?' + params : ''}`;
     }
 };
