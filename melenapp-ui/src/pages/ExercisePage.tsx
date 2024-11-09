@@ -42,12 +42,23 @@ const ExercisePage: React.FC = () => {
   }
 
   const url = convertYoutubeUrl(exercise.videoUrl);
+
+
   const tagsArray = exercise.tags ? exercise.tags.split(',') : [];
 
   const handleEditClick = () => navigate(`/editor/${exercise.id}`);
 
+  const handleCategoryClick = () => navigate(`/exercises/${exercise.category}`);
+
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
+
+        <Button variant="contained" 
+                color="primary"
+                onClick={handleCategoryClick}>
+          Atras
+        </Button>
+    
       <Card raised>
         <CardContent>
           <Typography variant="h4" component="h1" gutterBottom>
