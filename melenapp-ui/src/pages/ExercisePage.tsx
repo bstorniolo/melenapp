@@ -10,6 +10,7 @@ import {
   CardMedia, 
   Box, 
   Divider, 
+  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
   Grid 
 } from '@mui/material';
 import TagChips from '../components/TagChips';
@@ -30,6 +31,7 @@ const ExercisePage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     axios.get(`/exercises/${id}`)
@@ -48,14 +50,36 @@ const ExercisePage: React.FC = () => {
 
   const handleEditClick = () => navigate(`/editor/${exercise.id}`);
 
-  const handleCategoryClick = () => navigate(`/exercises/${exercise.category}`);
+  const handleBackClick = () => navigate(`/exercises/${exercise.category}`);
+
+
+
+
+
+  const handleDeleteClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      await axios.delete(`/exercises/${exercise.id}`);
+      setOpen(false);
+      navigate(`/exercises/${exercise.category}`); // Redirect to exercises list after deletion
+    } catch (error) {
+      console.error('Failed to delete skill:', error);
+    }
+  };
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
 
         <Button variant="contained" 
                 color="primary"
-                onClick={handleCategoryClick}>
+                onClick={handleBackClick}>
           Atras
         </Button>
     
@@ -118,6 +142,39 @@ const ExercisePage: React.FC = () => {
             >
               Edit Skill
             </Button>
+
+
+            <Button
+              variant="contained"
+              color="error"
+              onClick={handleDeleteClick}
+              sx={{ mt: 2, ml: 2 }}
+            >
+              Delete Skill
+            </Button>
+
+            {/* Confirmation Dialog */}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">Are you sure?</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Are you sure you want to delete this skill? This action cannot be undone.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={handleConfirmDelete} color="error" autoFocus>
+                  Delete
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Box>
         </CardContent>
       </Card>
