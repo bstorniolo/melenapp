@@ -165,6 +165,29 @@ namespace MelenappApi.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSkill(string id)
+        {
+            try
+            {
+                // Set the partition key to the ID if the partition key is the ID
+                var partitionKey = new PartitionKey(id);
+
+                // Delete the skill by ID and partition key
+                ItemResponse<Skill> response = await _container.DeleteItemAsync<Skill>(id, partitionKey);
+
+                return StatusCode((int)response.StatusCode); // Return the status code of the response
+            }
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound($"Skill with ID {id} not found.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpGet("mock")]
         public async Task<IActionResult> GetSkillsMock()
         {
