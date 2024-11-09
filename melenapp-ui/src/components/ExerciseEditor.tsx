@@ -52,6 +52,8 @@ const ExerciseEditor: React.FC = () => {
     }
   }, [id]);
 
+  const handleCancelClick = () => navigate(id ? `/exercise/${id}` : `/exercises`);
+
   const handleSubmit = () => {
     setIsLoading(true); 
     const exercise = {
@@ -157,6 +159,14 @@ const ExerciseEditor: React.FC = () => {
           {/* {id ? 'Update Exercise' : 'Add Exercise'} */}
           {isLoading ? <CircularProgress size={24} color="inherit" /> : id ? 'Update Exercise' : 'Add Exercise'}
         </Button>
+        <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCancelClick}
+              sx={{ mt: 2 }}
+            >
+              Cancel
+            </Button>
       </form>
     </Container>
   );
