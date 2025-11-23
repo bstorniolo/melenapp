@@ -97,7 +97,7 @@ const NavigationBar: React.FC = () => {
             }}
             
           >
-            Melen App
+            BSF - BASKETBALL SKILLS FOUNDATIONS
           </Typography>
 
 
