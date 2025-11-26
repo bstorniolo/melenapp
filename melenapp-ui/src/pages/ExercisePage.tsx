@@ -126,6 +126,9 @@ const ExercisePage: React.FC = () => {
               component="iframe"
               src={url}
               title={exercise.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
               sx={{ width: '100%', height: 315, border: 'none', mt: 2 }}
             />
           )}
