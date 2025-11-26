@@ -14,8 +14,8 @@ export const msalConfig: Configuration = {
     knownAuthorities: ['Melenaap.b2clogin.com'],
     // redirectUri: 'http://localhost:5173',
     // postLogoutRedirectUri: 'http://localhost:5173',
-    redirectUri: 'https://lively-flower-056905a0f.5.azurestaticapps.net',
-    postLogoutRedirectUri: 'https://lively-flower-056905a0f.5.azurestaticapps.net',
+    redirectUri: 'https://www.basketballskillsfoundations.com.ar',
+    postLogoutRedirectUri: 'https://www.basketballskillsfoundations.com.ar',
   },
   cache: {
     cacheLocation: 'localStorage', // This configures where your cache will be stored
@@ -49,4 +49,5 @@ export const msalConfig: Configuration = {
 
 export const loginRequest = {
   scopes: ['openid', 'profile', 'User.Read'],
+  extraQueryParameters: { ui_locales: 'es' },
 };
