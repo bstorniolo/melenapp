@@ -30,6 +30,8 @@ const HomePage: React.FC = () => {
     if (error) return <div>Error loading exercises.</div>;
     // if (isLoading) return <div>Loading...</div>;
 
+
+    console.log("exercises: ", exercises);
     const liked = exercises.filter((e) => e.isFavorite);
     console.log("liked:", liked)
     const finished = exercises.filter((e) => e.isCompleted);
@@ -49,7 +51,7 @@ const HomePage: React.FC = () => {
         {t('welcome-desc')}
       </Typography>
 
-      <SkillCarousel title="Liked" exercises={liked} />
+      <SkillCarousel title="Liked" exercises={exercises} />
       <SkillCarousel title="Finished" exercises={finished} />
       <SkillCarousel title="To do" exercises={todo} />
 
