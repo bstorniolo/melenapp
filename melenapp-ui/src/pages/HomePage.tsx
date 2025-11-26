@@ -1,7 +1,7 @@
 // src/pages/HomePage.tsx
 import React from 'react';
 import useSWR from 'swr';
-import { Container, Typography, Grid } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import axios from '../api/api';
 import SkillCard from '../components/SkillCard';
