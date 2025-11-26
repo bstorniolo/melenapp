@@ -30,30 +30,15 @@ const HomePage: React.FC = () => {
     // const { data: exercises = [], error } = useSWR<Exercise[]>(url, fetcher);
     const { data: exercises = [], error, isLoading } = useSWR<Exercise[]>(url, fetcher);
     if (error) return <div>Error loading exercises.</div>;
-    // if (isLoading) return <div>Loading...</div>;
 
   if (isLoading) return <div>Loading...</div>;
 
   const { user } = useUser();
   if (!user) return <div>Loading user...</div>;
 
-
-
-
   const liked = exercises.filter((e) => user.favorites.includes(e.id));
   const finished = exercises.filter((e) => user.completed.includes(e.id));
   const todo = exercises.filter((e) => user.todos.includes(e.id));
-
-
-    console.log("exercises: ", exercises);
-    // const liked = exercises.filter((e) => e.isFavorite);
-    console.log("liked:", liked)
-    // const finished = exercises.filter((e) => e.isCompleted);
-    console.log("finished:", finished)
-    // const todo = exercises.filter((e) => e.isTodo);
-    console.log("todo:", todo)
-    
-
 
   return (
     // <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
@@ -65,16 +50,10 @@ const HomePage: React.FC = () => {
         {t('welcome-desc')}
       </Typography>
 
-      <SkillCarousel title="Liked" exercises={exercises} />
+      <SkillCarousel title="Liked" exercises={liked} />
       <SkillCarousel title="Finished" exercises={finished} />
       <SkillCarousel title="To do" exercises={todo} />
-
-              {/* {exercises.map((exercise) => (
-          <SkillCard key={exercise.id} exercise={exercise} />
-        ))} */}
     </Container>
-        //     {/* TODO: Get only those exrcises that I liked or finished. */}
-
   );
         
 };
