@@ -31,8 +31,11 @@ const HomePage: React.FC = () => {
     // if (isLoading) return <div>Loading...</div>;
 
     const liked = exercises.filter((e) => e.isFavorite);
+    console.log("liked:", liked)
     const finished = exercises.filter((e) => e.isCompleted);
+    console.log("finished:", finished)
     const todo = exercises.filter((e) => e.isTodo);
+    console.log("todo:", todo)
     
 
 
