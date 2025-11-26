@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import axios from '../api/api';
-import SkillCard from '../components/SkillCard';
+// import SkillCard from '../components/SkillCard';
 import SkillCarousel from '../components/SkillCarousel';
 import { Exercise } from '../types/Skill';
 
