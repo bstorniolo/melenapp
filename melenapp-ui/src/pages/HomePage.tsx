@@ -49,11 +49,13 @@ const HomePage: React.FC = () => {
       <SkillCarousel title="Liked" exercises={liked} />
       <SkillCarousel title="Finished" exercises={finished} />
       <SkillCarousel title="To do" exercises={todo} />
+
+              {exercises.map((exercise) => (
+          <SkillCard key={exercise.id} exercise={exercise} />
+        ))}
     </Container>
         //     {/* TODO: Get only those exrcises that I liked or finished. */}
-        // {exercises.map((exercise) => (
-        //   <SkillCard key={exercise.id} exercise={exercise} />
-        // ))}
+
   );
         
 };
