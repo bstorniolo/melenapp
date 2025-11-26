@@ -7,6 +7,7 @@ import axios from '../api/api';
 // import SkillCard from '../components/SkillCard';
 import SkillCarousel from '../components/SkillCarousel';
 import { Exercise } from '../types/Skill';
+import { useUser } from '../contexts/UserContext';
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
@@ -26,17 +27,30 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 const HomePage: React.FC = () => {
     const { t } = useTranslation();
     const url = '/exercises'; // The URL key used in SWR
-    const { data: exercises = [], error } = useSWR<Exercise[]>(url, fetcher);
+    // const { data: exercises = [], error } = useSWR<Exercise[]>(url, fetcher);
+    const { data: exercises = [], error, isLoading } = useSWR<Exercise[]>(url, fetcher);
     if (error) return <div>Error loading exercises.</div>;
     // if (isLoading) return <div>Loading...</div>;
 
+  if (isLoading) return <div>Loading...</div>;
+
+  const { user } = useUser();
+  if (!user) return <div>Loading user...</div>;
+
+
+
+
+  const liked = exercises.filter((e) => user.favorites.includes(e.id));
+  const finished = exercises.filter((e) => user.completed.includes(e.id));
+  const todo = exercises.filter((e) => user.todos.includes(e.id));
+
 
     console.log("exercises: ", exercises);
-    const liked = exercises.filter((e) => e.isFavorite);
+    // const liked = exercises.filter((e) => e.isFavorite);
     console.log("liked:", liked)
-    const finished = exercises.filter((e) => e.isCompleted);
+    // const finished = exercises.filter((e) => e.isCompleted);
     console.log("finished:", finished)
-    const todo = exercises.filter((e) => e.isTodo);
+    // const todo = exercises.filter((e) => e.isTodo);
     console.log("todo:", todo)
     
 
