@@ -19,7 +19,7 @@ export const convertYoutubeUrl = (youtubeUrl:string) => {
         params.set('start', timeInSeconds || ''); // Add 'start' parameter with the same value
       }
 
-      return `https://www.youtube.com/embed/${videoId}${params ? '?' + params : ''}`;
+      return `https://www.youtube.com/embed/${videoId}${params ? '?' + params : ''}?rel=0&modestbranding=1&controls=1`;
     }
 
     const watchRegex = /https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)&?/;
