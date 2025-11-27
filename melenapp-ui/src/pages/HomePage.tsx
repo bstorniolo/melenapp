@@ -34,11 +34,18 @@ const HomePage: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
 
   const { user } = useUser();
-  if (!user) return <div>Loading user...</div>;
 
-  const liked = exercises.filter((e) => user.favorites.includes(e.id));
-  const finished = exercises.filter((e) => user.completed.includes(e.id));
-  const todo = exercises.filter((e) => user.todos.includes(e.id));
+  const liked = user
+  ? exercises.filter((e) => user.favorites.includes(e.id))
+  : [];
+
+  const finished = user
+    ? exercises.filter((e) => user.completed.includes(e.id))
+    : [];
+
+  const todo = user
+    ? exercises.filter((e) => user.todos.includes(e.id))
+    : [];
 
   return (
     // <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
